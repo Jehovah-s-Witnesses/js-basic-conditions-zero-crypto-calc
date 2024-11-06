@@ -1,30 +1,46 @@
-const amountMoney = +prompt(
-  'What amount of money in USD do you want to exchange?',
-);
-const selectedCurrency = prompt(
-  'In what currency(Bitcoin, Ethereum, TON, USDT)?',
-);
-const targetExchange = prompt('What is the purpose of the exchange?');
 const currency = {
   Bitcoin: 66988.57,
   Ethereum: 2489.74,
   TON: 4.98,
   USDT: 1,
 };
+let exchangeMoney;
 let money;
 let result;
+const errorMessage = 'You entered an incorrect value!';
+const currencyToExchange = prompt(
+  'What amount of money do you want to exchange(Bitcoin, Ethereum, TON)?',
+);
 
 if (
-  !isNaN(amountMoney) &&
-  (selectedCurrency === 'Bitcoin' ||
-    selectedCurrency === 'Ethereum' ||
-    selectedCurrency === 'TON' ||
-    selectedCurrency === 'USDT') &&
-  targetExchange === 'Crypto'
-) {
-  money = currency[selectedCurrency];
-  result = money * amountMoney;
-  alert(`The amount in the selected currency is ${result}$.`);
+  currencyToExchange === 'Bitcoin' ||
+  currencyToExchange === 'Ethereum' ||
+  currencyToExchange === 'TON') {
+  const targetCurrency = prompt(
+    'In what currency(Bitcoin, Ethereum, TON)?',
+  );
+
+  if (
+    targetCurrency === 'Bitcoin' ||
+    targetCurrency === 'Ethereum' ||
+    targetCurrency === 'TON') {
+    const amountCurrency = +prompt(
+      'How much currency do you want to exchange?',
+    );
+
+    if (!isNaN(amountCurrency)) {
+      money = currency[currencyToExchange];
+      exchangeMoney = money * amountCurrency;
+      result = exchangeMoney / currency[targetCurrency];
+      alert(
+        `The amount in the selected currency is ${result} ${targetCurrency}.`,
+      );
+    } else {
+      alert(errorMessage);
+    }
+  } else {
+    alert(errorMessage);
+  }
 } else {
-  alert('You entered an incorrect value!');
+  alert(errorMessage);
 }
